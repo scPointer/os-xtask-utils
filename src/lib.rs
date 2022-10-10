@@ -1,4 +1,6 @@
-﻿mod binutils;
+﻿#![deny(warnings, unsafe_code)]
+
+mod binutils;
 mod cargo;
 pub mod dir;
 mod git;

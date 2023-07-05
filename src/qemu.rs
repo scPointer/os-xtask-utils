@@ -45,7 +45,7 @@ impl Qemu {
         Self::find("img")
     }
 
-    fn find_qemu(mut name: OsString) -> OsString {
+    fn find_qemu(#[allow(unused_mut)] mut name: OsString) -> OsString {
         #[cfg(target_os = "windows")]
         name.push(OsStr::new(".exe"));
         SEARCH_DIRS

@@ -22,12 +22,14 @@ use std::{
 };
 
 pub trait CommandExt: AsRef<Command> + AsMut<Command> {
+    /// 为命令添加单个参数。
     #[inline]
     fn arg(&mut self, s: impl AsRef<OsStr>) -> &mut Self {
         self.as_mut().arg(s);
         self
     }
 
+    /// 为命令添加多个参数。
     #[inline]
     fn args<I, S>(&mut self, args: I) -> &mut Self
     where
@@ -38,6 +40,7 @@ pub trait CommandExt: AsRef<Command> + AsMut<Command> {
         self
     }
 
+    /// 根据 `option` 的值操作命令。
     #[inline]
     fn optional<T>(&mut self, option: &Option<T>, op: impl FnOnce(&mut Self, &T)) -> &mut Self {
         if let Some(val) = option {
@@ -46,6 +49,7 @@ pub trait CommandExt: AsRef<Command> + AsMut<Command> {
         self
     }
 
+    /// 根据 `condition` 的值操作命令。
     #[inline]
     fn conditional(&mut self, condition: bool, op: impl FnOnce(&mut Self)) -> &mut Self {
         if condition {
@@ -54,6 +58,7 @@ pub trait CommandExt: AsRef<Command> + AsMut<Command> {
         self
     }
 
+    /// 添加可选参数。
     #[inline]
     fn option(&mut self, option: Option<impl AsRef<OsStr>>) -> &mut Self {
         if let Some(arg) = option {
@@ -62,12 +67,14 @@ pub trait CommandExt: AsRef<Command> + AsMut<Command> {
         self
     }
 
+    /// 设置命令的工作目录。
     #[inline]
     fn current_dir(&mut self, dir: impl AsRef<Path>) -> &mut Self {
         self.as_mut().current_dir(dir);
         self
     }
 
+    /// 设置命令的环境变量。
     #[inline]
     fn env(&mut self, key: impl AsRef<OsStr>, val: impl AsRef<OsStr>) -> &mut Self {
         self.as_mut().env(key, val);

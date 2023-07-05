@@ -1,5 +1,4 @@
 ﻿use super::ext;
-use once_cell::sync::Lazy;
 use std::{
     collections::HashSet,
     ffi::{OsStr, OsString},
@@ -10,15 +9,18 @@ use std::{
 
 ext!(def; Qemu);
 
-static SEARCH_DIRS: Lazy<Mutex<HashSet<PathBuf>>> = Lazy::new(|| {
-    Mutex::new(if cfg!(target_os = "windows") {
-        HashSet::from_iter([PathBuf::from(r"C:\Program Files\qemu")])
-    } else {
-        HashSet::new()
-    })
-});
+// Waiting for `std::cell::LazyCell`.
+static SEARCH_DIRS: once_cell::sync::Lazy<Mutex<HashSet<PathBuf>>> =
+    once_cell::sync::Lazy::new(|| {
+        Mutex::new(if cfg!(target_os = "windows") {
+            HashSet::from_iter([PathBuf::from(r"C:\Program Files\qemu")])
+        } else {
+            HashSet::new()
+        })
+    });
 
 impl Qemu {
+    /// Qemu 添加搜索路径。
     #[inline]
     pub fn search_at(path: impl AsRef<Path>) {
         SEARCH_DIRS
@@ -35,11 +37,13 @@ impl Qemu {
         ]))))
     }
 
+    /// 调用 Qemu system 虚拟化。
     #[inline]
     pub fn system(arch: impl AsRef<OsStr>) -> Self {
         Self::find(OsString::from_iter([OsStr::new("system-"), arch.as_ref()]))
     }
 
+    /// 调用 Qemu img。
     #[inline]
     pub fn img() -> Self {
         Self::find("img")

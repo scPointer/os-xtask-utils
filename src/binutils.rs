@@ -18,7 +18,7 @@ impl BinUtil {
             })
             .any(|line| OsStr::new(line) == which);
         if !check {
-            Cargo::install().arg("cargo-binutils").invoke();
+            Cargo::install().arg("cargo-binutils").arg("--version").arg("0.3.0").invoke();
         }
         Self(Command::new(which))
     }

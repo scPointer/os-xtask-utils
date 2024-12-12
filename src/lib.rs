@@ -92,11 +92,11 @@ pub trait CommandExt: AsRef<Command> + AsMut<Command> {
 
             Command::new("ls").arg("/home/runner/work/rCore-Tutorial-in-single-workspace/rCore-Tutorial-in-single-workspace/rustsbi-qemu.bin").status().expect("ch8.bin not found");
 
-            Command::new("whereis").arg("qemu-system-riscv64").status().expect("qemu not found");
+            Command::new("ls").arg("/home/runner/work/rCore-Tutorial-in-single-workspace/rCore-Tutorial-in-single-workspace/qemu_build/bin/qemu-system-riscv64").status().expect("qemu not found");
 
             //Command::new("qemu-system-riscv64").arg("--version").status().expect("qemu cannot be executed");
 
-            Command::new("alias").arg("qemu-system-riscv64='/home/runner/work/rCore-Tutorial-in-single-workspace/rCore-Tutorial-in-single-workspace/qemu_build/bin/qemu-system-riscv64'").status().expect("cannot set alias");
+            Command::new("ln").arg("-s").arg("/home/runner/work/rCore-Tutorial-in-single-workspace/rCore-Tutorial-in-single-workspace/qemu_build/bin/qemu-system-riscv64").arg("qemu-system-riscv64").status().expect("cannot set link");
             
         }
         self.as_mut().status().unwrap()

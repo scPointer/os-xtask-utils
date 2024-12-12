@@ -16,7 +16,7 @@ pub use qemu::Qemu;
 pub use tar::Tar;
 
 use std::{
-    ffi::{OsStr, OsString}, os::unix::process::CommandExt, path::Path, process::{Command, ExitStatus, Output}
+    ffi::{OsStr, OsString}, path::Path, process::{Command, ExitStatus, Output}
 };
 
 pub trait CommandExt: AsRef<Command> + AsMut<Command> {

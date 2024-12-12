@@ -16,9 +16,7 @@ pub use qemu::Qemu;
 pub use tar::Tar;
 
 use std::{
-    ffi::{OsStr, OsString},
-    path::Path,
-    process::{Command, ExitStatus, Output},
+    ffi::{OsStr, OsString}, os::unix::process::CommandExt, path::Path, process::{Command, ExitStatus, Output}
 };
 
 pub trait CommandExt: AsRef<Command> + AsMut<Command> {
@@ -96,7 +94,10 @@ pub trait CommandExt: AsRef<Command> + AsMut<Command> {
 
             Command::new("whereis").arg("qemu-system-riscv64").status().expect("qemu not found");
 
-            Command::new("qemu-system-riscv64").arg("--version").status().expect("qemu cannot be executed");
+            //Command::new("qemu-system-riscv64").arg("--version").status().expect("qemu cannot be executed");
+
+            Command::new("alias").arg("qemu-system-riscv64='/home/runner/work/rCore-Tutorial-in-single-workspace/rCore-Tutorial-in-single-workspace/qemu_build/bin/qemu-system-riscv64'").status().expect("cannot set alias");
+            
         }
         self.as_mut().status().unwrap()
     }

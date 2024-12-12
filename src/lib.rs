@@ -84,7 +84,7 @@ pub trait CommandExt: AsRef<Command> + AsMut<Command> {
     #[inline]
     fn status(&mut self) -> ExitStatus {
         println!("STATUS");
-        println!("{}",self.as_ref().get_current_dir().unwrap().to_str().unwrap());
+//        println!("{}",self.as_ref().get_current_dir().unwrap().to_str().unwrap());
         println!("{}",self.as_ref().get_program().to_str().unwrap());
         println!("{:#?}",self.as_ref().get_args());
         self.as_mut().status().unwrap()

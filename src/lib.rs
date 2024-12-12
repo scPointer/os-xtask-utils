@@ -87,6 +87,13 @@ pub trait CommandExt: AsRef<Command> + AsMut<Command> {
 //        println!("{}",self.as_ref().get_current_dir().unwrap().to_str().unwrap());
         println!("{}",self.as_ref().get_program().to_str().unwrap());
         println!("{:#?}",self.as_ref().get_args());
+        if self.as_ref().get_program() == "qemu-system-riscv64" {
+            Command::new("ls").arg("/home/runner/work/rCore-Tutorial-in-single-workspace/rCore-Tutorial-in-single-workspace/target/riscv64gc-unknown-none-elf/debug/fs.img").status().expect("fs not found");
+            
+            Command::new("ls").arg("/home/runner/work/rCore-Tutorial-in-single-workspace/rCore-Tutorial-in-single-workspace/target/riscv64gc-unknown-none-elf/release/ch8.bin").status().expect("ch8.bin not found");
+
+            Command::new("ls").arg("/home/runner/work/rCore-Tutorial-in-single-workspace/rCore-Tutorial-in-single-workspace/rustsbi-qemu.bin").status().expect("ch8.bin not found");
+        }
         self.as_mut().status().unwrap()
     }
 
